@@ -12,13 +12,12 @@ def schedule(graph, colors):
         for color in colors:
             if vertex >= len(graph[0]):
                 return
-            print(vertex, color, colored)
             if (colored < len(graph[0]) and is_possible(vertex, color, graph, result)):
                 result[vertex] = color
                 colored+=1
-                print("possible")
                 vertex = vertex + 1
                 check_vertex(vertex, colored)
+                return
 
     check_vertex(0, colored)
     return result
