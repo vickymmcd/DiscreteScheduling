@@ -1,4 +1,7 @@
 import sys
+from students import sorted_conflicts as student_matrix
+from students import total_course_conflicts
+from instructors import sorted_conflicts as instructor_matrix
 
 class Schedule:
     def __init__(self, instructor_matrix, student_matrix, num_colors, num_classes):
@@ -54,7 +57,7 @@ class Schedule:
         return True
 
 
-schedule = Schedule([[0,1,0],[1,0,0],[0,0,0]], [[0,1,0],[1,0,0],[0,0,0]], 3, 3)
+schedule = Schedule(instructor_matrix, student_matrix, 8, 45)
 res1 = schedule.get_coloring()
-for val in res1:
-    print(val)
+for i, val in enumerate(res1):
+    print(total_course_conflicts[i][0], val)

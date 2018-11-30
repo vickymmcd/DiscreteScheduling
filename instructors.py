@@ -1,6 +1,7 @@
 import pandas
 import numpy as np
-import networkx as nx
+from course_list import final_course_list
+from students import total_course_conflicts
 
 instructors = pandas.read_csv('2019courses.csv')
 
@@ -9,11 +10,20 @@ teaching_dict = {}
 course_idx = {}
 course_list = []
 
+count = 0
 # Iterate through every offered course
 for idx, course in instructors.iterrows():
     course_code = course['Course #']
-    if course_code not in course_list: # Accounts for courses with multiple sections
-        course_idx[course_code] = idx
+    if course_code == 'MTH2188A / SCI2199A':
+        course_code = 'MTH2188'
+    if course_code == 'ENGR2199A':
+        course_code = 'ENGR2199'
+    if course_code == 'ENGR3299':
+        course_code = 'ENGR3299A'
+    course_code = course_code.replace(" ", "")
+    if course_code not in course_list and course_code in final_course_list: # Accounts for courses with multiple sections
+        course_idx[course_code] = count
+        count+=1
         course_list.append(course_code)
         profs = course['Instructor'].split(';')
         for prof in profs:
@@ -25,6 +35,7 @@ for idx, course in instructors.iterrows():
 
 # The adjacency matrix, with courses as vertices and edges indicating two classes taught by the same professor
 conflicts = np.zeros((len(course_list), len(course_list)))
+
 
 # For each professor, if they teach multiple courses, mark those points in the adjacency matrix
 for prof in teaching_dict:
@@ -38,4 +49,14 @@ for prof in teaching_dict:
 
                 conflicts[course_idx[class1]][course_idx[class2]] = 1
                 conflicts[course_idx[class2]][course_idx[class1]] = 1
-print(conflicts)
+
+# Stores the sorted adjacency matrix
+sorted_conflicts = []#np.zeros((len(course_list), len(course_list)))
+
+# For each row in the ordered total_course_conflicts, put that row into a new ordered matrix
+for name,num in total_course_conflicts:
+    # Stores the row for the class in the unordered matrix
+    original_row = course_idx[name]
+
+    # Add the row to the ordered position
+    sorted_conflicts.append(conflicts[original_row].tolist())

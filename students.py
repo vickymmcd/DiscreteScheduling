@@ -1,7 +1,6 @@
 import pandas
-import matplotlib.pyplot as plt
 import numpy as np
-import networkx as nx
+from course_list import final_course_list
 
 students = pandas.read_csv('Course Fair Survey Data_for_SP19.csv')
 
@@ -9,7 +8,7 @@ students = pandas.read_csv('Course Fair Survey Data_for_SP19.csv')
 student_dict = {}
 
 # Stores the name of the course
-course_list = []
+student_course_list = []
 
 # Iterate through every student
 for idx, student in students.iterrows():
@@ -34,15 +33,15 @@ for idx, student in students.iterrows():
     student_dict[student_id] = all_courses_no_empty
 
     # Add the courses to the course_list if they are not there already
-    course_list = list(set(course_list).union(set(all_courses_no_empty)))
+    student_course_list = list(set(student_course_list).union(set(all_courses_no_empty)))
+    student_course_list = list(set(student_course_list).intersection(set(final_course_list)))
 
-print(course_list)
 
 # Order the course list in alphabetical order
 #course_list = sorted(course_list)
 
 # The adjacency matrix, with courses as vertices and edges indicating two classes were chosen by the same student
-conflicts = np.zeros((len(course_list), len(course_list)))
+conflicts = np.zeros((len(student_course_list), len(student_course_list)))
 
 # For each student, if they want multiple courses, mark those points in the adjacency matrix
 for student in student_dict:
@@ -57,9 +56,9 @@ for student in student_dict:
                 class2 = classes_wanted[j]
 
                 # Using the indices of the classes in course_list, update adjacency value
-                conflicts[course_list.index(class1)][course_list.index(class2)] += 1
-                conflicts[course_list.index(class2)][course_list.index(class1)] += 1
-print(conflicts)
+                if class1 in student_course_list and class2 in student_course_list:
+                    conflicts[student_course_list.index(class1)][student_course_list.index(class2)] += 1
+                    conflicts[student_course_list.index(class2)][student_course_list.index(class1)] += 1
 
 # Find the sum of the conflicts for each class by summing the row values
 summation = np.sum(conflicts,axis=1)
@@ -68,11 +67,10 @@ summation = np.sum(conflicts,axis=1)
 total_course_conflicts = []
 
 # For each course, add a dictionary with the course id and the conflict summation
-for idx, course in enumerate(course_list):
+for idx, course in enumerate(student_course_list):
     total_course_conflicts.append((course,summation[idx]))
 
 total_course_conflicts.sort(key=lambda x:x[1], reverse=True)
-print(total_course_conflicts)
 
 # Stores the sorted adjacency matrix
 sorted_conflicts = []#np.zeros((len(course_list), len(course_list)))
@@ -80,9 +78,7 @@ sorted_conflicts = []#np.zeros((len(course_list), len(course_list)))
 # For each row in the ordered total_course_conflicts, put that row into a new ordered matrix
 for name,num in total_course_conflicts:
     # Stores the row for the class in the unordered matrix
-    original_row = course_list.index(name)
+    original_row = student_course_list.index(name)
 
     # Add the row to the ordered position
     sorted_conflicts.append(conflicts[original_row].tolist())
-
-print(sorted_conflicts)
