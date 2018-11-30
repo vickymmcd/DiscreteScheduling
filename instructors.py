@@ -60,3 +60,14 @@ for name,num in total_course_conflicts:
 
     # Add the row to the ordered position
     sorted_conflicts.append(conflicts[original_row].tolist())
+
+sorted_course_list = []
+for name,num in total_course_conflicts:
+    sorted_course_list.append(name)
+
+for i, name in enumerate(sorted_course_list):
+    # Stores the row for the class in the unordered matrix
+    original_idx = course_idx[name]
+    for j, val in enumerate(conflicts[original_idx].tolist()):
+        class2 = course_list[j]
+        sorted_conflicts[i][sorted_course_list.index(class2)] = conflicts[original_idx][j]

@@ -17,8 +17,6 @@ class Schedule:
         for i in range(0, self.num_classes):
             self.result.append(-1)
 
-        #TODO (Vicky): Do this in order of descending conflict weight, sort first or something
-        # consider the "name" of each vertex to be its index where the first one is 0
         def check_vertex(vertex):
             if vertex >= self.num_classes:
                 return
@@ -44,7 +42,8 @@ class Schedule:
         return self.result
 
     def get_student_conflicts(self, vertex, color):
-        self.conflicts[color] = 0
+        if color not in self.conflicts:
+            self.conflicts[color] = 0
         for v in range(0, self.num_classes):
             if(self.result[v] == color):
                 self.conflicts[color] = self.conflicts[color] + self.students[v][vertex]

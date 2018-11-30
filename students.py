@@ -42,6 +42,7 @@ for idx, student in students.iterrows():
 
 # The adjacency matrix, with courses as vertices and edges indicating two classes were chosen by the same student
 conflicts = np.zeros((len(student_course_list), len(student_course_list)))
+sorted_conflicts = np.zeros((len(student_course_list), len(student_course_list)))
 
 # For each student, if they want multiple courses, mark those points in the adjacency matrix
 for student in student_dict:
@@ -73,12 +74,18 @@ for idx, course in enumerate(student_course_list):
 total_course_conflicts.sort(key=lambda x:x[1], reverse=True)
 
 # Stores the sorted adjacency matrix
-sorted_conflicts = []#np.zeros((len(course_list), len(course_list)))
-
+#sorted_conflicts = []#np.zeros((len(course_list), len(course_list)))
+sorted_course_list = []
+sorted_conflicts = np.array(sorted_conflicts).tolist()
 # For each row in the ordered total_course_conflicts, put that row into a new ordered matrix
 for name,num in total_course_conflicts:
-    # Stores the row for the class in the unordered matrix
-    original_row = student_course_list.index(name)
+    sorted_course_list.append(name)
 
-    # Add the row to the ordered position
-    sorted_conflicts.append(conflicts[original_row].tolist())
+for i, name in enumerate(sorted_course_list):
+    # Stores the row for the class in the unordered matrix
+    original_idx = student_course_list.index(name)
+    for j, val in enumerate(conflicts[original_idx].tolist()):
+        class2 = student_course_list[j]
+        sorted_conflicts[i][sorted_course_list.index(class2)] = conflicts[original_idx][j]
+
+# print(sorted_conflicts)
