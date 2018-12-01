@@ -2,6 +2,7 @@ import sys
 from students import sorted_conflicts as student_matrix
 from students import total_course_conflicts
 from instructors import sorted_conflicts as instructor_matrix
+from instructors import course_names
 
 class Schedule:
     def __init__(self, instructor_matrix, student_matrix, num_colors, num_classes):
@@ -58,5 +59,52 @@ class Schedule:
 
 schedule = Schedule(instructor_matrix, student_matrix, 8, 45)
 res1 = schedule.get_coloring()
+
+print("Schedule:")
+print()
+print("Block #1")
 for i, val in enumerate(res1):
-    print(total_course_conflicts[i][0], val)
+    if val == 0:
+        print(course_names[total_course_conflicts[i][0]])
+
+print()
+print("Block #2")
+for i, val in enumerate(res1):
+    if val == 1:
+        print(course_names[total_course_conflicts[i][0]])
+
+print()
+print("Block #3")
+for i, val in enumerate(res1):
+    if val == 2:
+        print(course_names[total_course_conflicts[i][0]])
+
+print()
+print("Block #4")
+for i, val in enumerate(res1):
+    if val == 3:
+        print(course_names[total_course_conflicts[i][0]])
+
+print()
+print("Block #5")
+for i, val in enumerate(res1):
+    if val == 4:
+        print(course_names[total_course_conflicts[i][0]])
+
+print()
+print("Block #6")
+for i, val in enumerate(res1):
+    if val == 5:
+        print(course_names[total_course_conflicts[i][0]])
+
+print()
+print("Block #7")
+for i, val in enumerate(res1):
+    if val == 6:
+        print(course_names[total_course_conflicts[i][0]])
+
+print()
+print("Block #8")
+for i, val in enumerate(res1):
+    if val == 7:
+        print(course_names[total_course_conflicts[i][0]])

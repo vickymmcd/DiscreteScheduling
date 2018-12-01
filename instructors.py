@@ -9,6 +9,7 @@ instructors = pandas.read_csv('2019courses.csv')
 teaching_dict = {}
 course_idx = {}
 course_list = []
+course_names = {}
 
 count = 0
 # Iterate through every offered course
@@ -21,6 +22,8 @@ for idx, course in instructors.iterrows():
     if course_code == 'ENGR3299':
         course_code = 'ENGR3299A'
     course_code = course_code.replace(" ", "")
+    name = course["Course Title"]
+    course_names[course_code] = name
     if course_code not in course_list and course_code in final_course_list: # Accounts for courses with multiple sections
         course_idx[course_code] = count
         count+=1
