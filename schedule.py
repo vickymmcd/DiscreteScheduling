@@ -12,6 +12,7 @@ class Schedule:
         for i in range(0, num_colors):
             self.colors.append(i)
         self.num_classes = num_classes
+        self.conflict_sum = 0
 
     def get_coloring(self):
         self.result = []
@@ -35,11 +36,13 @@ class Schedule:
                 if val < least:
                     least = val
                     color = key
+            self.conflict_sum = self.conflict_sum + least
             self.result[vertex] = color
             check_vertex(vertex+1)
             return
 
         check_vertex(0)
+        print(self.conflict_sum)
         return self.result
 
     def get_student_conflicts(self, vertex, color):
