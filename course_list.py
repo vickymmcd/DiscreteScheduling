@@ -1,7 +1,7 @@
 import pandas
 import numpy as np
 
-students = pandas.read_csv('Course Fair Survey Data_for_SP19.csv')
+students = pandas.read_csv('student_data.csv')
 
 # Stores a dictionary of studentIDs and the courses they selected
 student_dict = {}

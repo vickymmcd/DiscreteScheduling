@@ -41,7 +41,8 @@ class Schedule:
             check_vertex(vertex+1)
             return
 
-        check_vertex(0)
+        if len(self.instructors) > 0:
+            check_vertex(0)
         print(self.conflict_sum)
         return self.result
 

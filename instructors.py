@@ -3,7 +3,7 @@ import numpy as np
 from course_list import final_course_list
 from students import total_course_conflicts
 
-instructors = pandas.read_csv('2019courses.csv')
+instructors = pandas.read_csv('instructor_data.csv')
 
 # Build a dictionary of instructors -> courses they teach
 teaching_dict = {}
