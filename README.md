@@ -19,6 +19,6 @@ python3 schedule.py
 
 ## Supplemental Information
 
-[Overview and Relevant Proofs](https://drive.google.com/file/d/1IFwiP55zrsmZ2LNjYHzkjQkYrvNgvXeD/view?usp=sharing)
+[Overview and Relevant Proofs](https://drive.google.com/file/d/1J6NN5r3DXd_cYVeCl-z3ydBcoC9ufoxn/view?usp=sharing)
 
 [Final Presentation](https://docs.google.com/presentation/d/1udd0V4KmQUTm4z0gyqxA2X1Wi7JObEW7RzfqEL2WZ0Q/edit?usp=sharing)
